@@ -1,0 +1,21 @@
+{
+  "name": "treeview_api",
+  "version": "1.0.0",
+  "description": "Treeview implementation",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/akshay1706/treeview"
+  },
+  "author": "Akshay Kumar",
+  "license": "BSD-2-Clause",
+  "bugs": {
+    "url": "https://github.com/akshay1706/treeview/issues"
+  },
+  "dependencies": {
+    "socket.io": "~1.4.6"
+  }
+}
