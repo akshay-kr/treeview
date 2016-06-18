@@ -1,0 +1,14 @@
+.root{
+	margin-top:10%;
+}
+.no-padding{
+	padding-right: 0px;
+	padding-left: 0px;
+}
+.factory-form{
+	padding-left:0px !important;
+}
+.error{
+	color:red;
+	font-size: 12px;
+}
