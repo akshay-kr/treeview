@@ -29,40 +29,50 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-md-3 no-padding" factory-form class="factory-form" ng-show="showFactory">
-					<div class="panel panel-default">
-						<div class="panel-body">
-							<ng-form name="factoryForm">
-								<div class="form-group  has-feedback" ng-class="{'has-error':factoryForm.factoryname.$invalid && factoryForm.factoryname.$dirty,'has-success':factoryForm.factoryname.$valid}">
-									<input type="text" class="form-control input-sm" placeholder="Factory name"  name="factoryname" aria-describedby="factoryname" ng-pattern="/^[a-zA-Z]+$/"  ng-model="factoryName" required>
-									<span class="glyphicon glyphicon-ok form-control-feedback" ng-show="factoryForm.factoryname.$valid" aria-hidden="true"></span>
-									<span id="factoryname" class="sr-only">(success)</span>
-									<p class="error" ng-show="factoryForm.factoryname.$invalid && factoryForm.factoryname.$dirty">Enter a valid factory name.</p>
-								</div>
-								<div class="form-group has-feedback" ng-class="{'has-error':factoryForm.minimum.$invalid && factoryForm.minimum.$dirty,'has-success':factoryForm.minimum.$valid}">
-									<input type="text" class="form-control input-sm" placeholder="Minimum" name="minimum" aria-describedby="minimum" ng-pattern="/^\d+$/"  ng-model="min" required>
-									<span class="glyphicon glyphicon-ok form-control-feedback" ng-show="factoryForm.minimum.$valid" aria-hidden="true"></span>
-									<span id="minimum" class="sr-only">(success)</span>
-									<p class="error" ng-show="factoryForm.minimum.$invalid && factoryForm.minimum.$dirty">Enter a valid integer.</p>
-								</div>
-								<div class="form-group has-feedback" ng-class="{'has-error':factoryForm.maximum.$invalid && factoryForm.maximum.$dirty,'has-success':factoryForm.maximum.$valid}">
-									<input type="text" class="form-control input-sm" placeholder="Maximum" name="maximum" aria-describedby="maximum" ng-pattern="/^\d+$/"  ng-model="max" required>
-									<span class="glyphicon glyphicon-ok form-control-feedback" ng-show="factoryForm.maximum.$valid" aria-hidden="true"></span>
-									<span id="maximum" class="sr-only">(success)</span>
-									<p class="error" ng-show="factoryForm.maximum.$invalid && factoryForm.maximum.$dirty">Enter a valid integer.</p>
-								</div>
-								<div class="text-center">
-									<p class="error" ng-show="max<=min">Maximum should be greater than minimum.</p>
-									<button class="btn btn-sm btn-success" ng-disabled="factoryForm.$invalid || max <= min"> <strong>Create</strong>
-									</button>
-								</div>
-							</ng-form>
+
+			</div>
+		</div>
+		<div class="col-md-3 no-padding factory-form" factory-form ng-show="showFactory">
+			<div class="panel panel-default">
+				<div class="panel-body">
+					<ng-form name="factoryForm">
+						<div class="form-group  has-feedback" ng-class="{'has-error':factoryForm.factoryname.$invalid && factoryForm.factoryname.$dirty,'has-success':factoryForm.factoryname.$valid}">
+							<input type="text" class="form-control input-sm" placeholder="Factory name"  name="factoryname" aria-describedby="factoryname" ng-pattern="/^[a-zA-Z]+$/"  ng-model="factoryName" required>
+							<span class="glyphicon glyphicon-ok form-control-feedback" ng-show="factoryForm.factoryname.$valid" aria-hidden="true"></span>
+							<span id="factoryname" class="sr-only">(success)</span>
+							<p class="error" ng-show="factoryForm.factoryname.$invalid && factoryForm.factoryname.$dirty">Enter a valid factory name.</p>
 						</div>
-					</div>
+						<div class="form-group has-feedback" ng-class="{'has-error':factoryForm.minimum.$invalid && factoryForm.minimum.$dirty,'has-success':factoryForm.minimum.$valid}">
+							<input type="text" class="form-control input-sm" placeholder="Minimum" name="minimum" aria-describedby="minimum" ng-pattern="/^\d+$/"  ng-model="min" required>
+							<span class="glyphicon glyphicon-ok form-control-feedback" ng-show="factoryForm.minimum.$valid" aria-hidden="true"></span>
+							<span id="minimum" class="sr-only">(success)</span>
+							<p class="error" ng-show="factoryForm.minimum.$invalid && factoryForm.minimum.$dirty">Enter a valid integer.</p>
+						</div>
+						<div class="form-group has-feedback" ng-class="{'has-error':factoryForm.maximum.$invalid && factoryForm.maximum.$dirty,'has-success':factoryForm.maximum.$valid}">
+							<input type="text" class="form-control input-sm" placeholder="Maximum" name="maximum" aria-describedby="maximum" ng-pattern="/^\d+$/"  ng-model="max" required>
+							<span class="glyphicon glyphicon-ok form-control-feedback" ng-show="factoryForm.maximum.$valid" aria-hidden="true"></span>
+							<span id="maximum" class="sr-only">(success)</span>
+							<p class="error" ng-show="factoryForm.maximum.$invalid && factoryForm.maximum.$dirty">Enter a valid integer.</p>
+						</div>
+						<div class="text-center">
+							<p class="error" ng-show="max<=min && max!=''">Maximum should be greater than minimum.</p>
+							<button class="btn btn-sm btn-success" ng-disabled="factoryForm.$invalid || max <= min" ng-click="createFactory()"> <strong>Create</strong>
+							</button>
+						</div>
+					</ng-form>
 				</div>
 			</div>
 		</div>
 	</div>
+	<div class="row" ng-repeat="factory in factories track by $index">
+		<div class="col-md-1 col-md-offset-2">
+			<hr class="vr pull-left">
+			<hr class="hr pull-left"></div>
+		<div class="col-md-9 no-padding">
+			<p class="pull-left node-text"><strong>{{factory.factoryName}}</strong></p>
+		</div>
+	</div>
+
 	<script type="text/javascript" src="config.js"></script>
 	<script type="text/javascript" src="controller.js"></script>
 </body>

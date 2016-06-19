@@ -1,14 +1,39 @@
 .root{
 	margin-top:10%;
 }
+.no-margin{
+	margin-right: 0px !important;
+	margin-left: 0px !important;
+}
 .no-padding{
 	padding-right: 0px;
 	padding-left: 0px;
+	padding-top: 0px;
+	padding-bottom: 0px;
 }
 .factory-form{
 	padding-left:0px !important;
+	position: absolute !important;
+	z-index: 99;
 }
 .error{
 	color:red;
 	font-size: 12px;
+}
+.vr {
+    background-color:#000;
+    height:60px !important;
+    width:2.67px;
+}
+.hr{
+	border-top: 2.3px solid #000;
+	width:100%;
+}
+hr{
+	margin-top: 0px;
+	margin-bottom: 0px;
+}
+.node-text{
+	padding-top: 50px;
+	margin-bottom: 0px;
 }
