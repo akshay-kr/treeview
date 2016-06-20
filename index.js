@@ -13,10 +13,10 @@ app.use(cors());
 app.use(express.static(path.join(__dirname, 'public')));
 // viewed at http://localhost:8080
 //app.use(express.static('files'));
+var server = app.listen(config.port);
 app.get('/', function(req, res) {
     res.sendFile(path.join(__dirname + '/index.html'));
 });
-var server = app.listen(config.port);
 var io = require('socket.io').listen(server);
 var dbInstance = null;
 io.on('connection', function(socket) {
@@ -86,7 +86,7 @@ function saveFactory(data) {
 	var deferred = q.defer();
 	if (dbInstance) {
 		// Get the documents collection
-		var collection = dbInstance.collection(config.dbName);
+		var collection = dbInstance.collection(config.collection);
 		// Insert some users
 		collection.insert(data, function(err) {
 			if (err) {
