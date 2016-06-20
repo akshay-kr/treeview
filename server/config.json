@@ -1,5 +1,0 @@
-{
-	"port":7008,
-	"mongoConnUrl": "mongodb://localhost:27017/treeview",
-	"dbName":"factories"
-}
