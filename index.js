@@ -15,7 +15,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 //app.use(express.static('files'));
 var server = app.listen(config.port);
 app.get('/', function(req, res) {
-    res.sendFile(path.join(__dirname + '/index.html'));
+	res.sendFile(path.join(__dirname + '/index.html'));
 });
 var io = require('socket.io').listen(server);
 var dbInstance = null;
@@ -42,6 +42,18 @@ io.on('connection', function(socket) {
 			console.log(err);
 			socket.emit('factory_created_fail');
 			socket.broadcast.emit('factory_created_fail');
+		});
+	});
+	socket.on('delete_factory', function(data) {
+		createMongoClient().then(function() {
+			return deleteFactory(data.id);
+		}).then(function() {
+			socket.emit('factory_deleted_success', data);
+			socket.broadcast.emit('factory_deleted_success', data);
+		}, function(err) {
+			console.log(err);
+			socket.emit('factory_deleted_fail');
+			socket.broadcast.emit('factory_deleted_fail');
 		});
 	});
 });
@@ -89,6 +101,27 @@ function saveFactory(data) {
 		var collection = dbInstance.collection(config.collection);
 		// Insert some users
 		collection.insert(data, function(err) {
+			if (err) {
+				deferred.reject(err);
+			} else {
+				deferred.resolve();
+			}
+		});
+	} else {
+		deferred.reject("Db instance not found.");
+	}
+	return deferred.promise;
+}
+
+function deleteFactory(id) {
+	var deferred = q.defer();
+	if (dbInstance) {
+		// Get the documents collection
+		var collection = dbInstance.collection(config.collection);
+		// Insert some users
+		collection.remove({
+			_id: new mongodb.ObjectID(id)
+		}, function(err) {
 			if (err) {
 				deferred.reject(err);
 			} else {

@@ -37,3 +37,27 @@ hr{
 	padding-top: 50px;
 	margin-bottom: 0px;
 }
+.panel-top-5{
+	padding-top:5px;
+}
+.icon-bottom-5{
+	padding-bottom: 5px;
+}
+.mod-a {
+  color: grey !important;
+}
+.mod-a:hover {
+  color: black !important;
+  text-decoration: none !important;
+}
+.close-button{
+	font-size: 20px;
+	padding-bottom: 5px;
+}
+.close-button:hover{
+	color: black !important;
+  	text-decoration: none !important;
+}
+.childFormItem{
+	padding-top: 0px;
+}

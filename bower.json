@@ -19,6 +19,7 @@
     "angular": "^1.5.7",
     "bootstrap": "^3.3.6",
     "font-awesome": "^4.6.3",
-    "ngToast": "ngtoast#^2.0.0"
+    "ngToast": "ngtoast#^2.0.0",
+    "underscore": "^1.8.3"
   }
 }
