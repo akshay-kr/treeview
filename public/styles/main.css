@@ -68,13 +68,16 @@
 .tree li::before {
     border-left:1px solid #999;
     bottom:50px;
-    height:60px;
+    height:105%;
     top:0;
     width:1px
 }
+.child{
+    height: 60px;
+}
 .tree li::after {
     border-top:1px solid #999;
-    height:30px;
+    height:80px;
     top:40px;
     width:100px
 }

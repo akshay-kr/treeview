@@ -19,7 +19,7 @@ app.factory('socket', ['$rootScope', function() {
 		}
 	};
 }]);
-app.controller('mainController', function($scope, $http, ngToast, socket, $rootScope) {
+app.controller('mainController', function($scope, $http, ngToast, socket, $rootScope, $window, $document) {
 	$scope.showFactory = false;
 	$scope.factories = [];
 	socket.emit('get_all_factories');
@@ -37,7 +37,6 @@ app.controller('mainController', function($scope, $http, ngToast, socket, $rootS
 
 	socket.on('factories_fetch_success', function(data) {
 		$scope.factories = data;
-		console.log(data);
 		$scope.$apply('factories');
 	});
 	socket.on('factories_fetch_fail', function() {
@@ -70,7 +69,7 @@ app.controller('mainController', function($scope, $http, ngToast, socket, $rootS
 		$scope.selectedFactory = factory;
 		var element = passedEventObject.currentTarget.getBoundingClientRect();
 		var x = element.left + element.width;
-		var y = element.top;
+		var y = element.top + $window.scrollY;
 		$scope.menuClass = {
 			"left": x,
 			"top": y
