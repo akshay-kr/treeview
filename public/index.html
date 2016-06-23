@@ -20,20 +20,7 @@
 </head>
 <body ng-controller="mainController">
 	<div class="row">
-		<div class="col-md-10 col-md-offset-2">
-			<div class="row pull-left root">
-				<div class="col-md-4 no-padding">
-					<div class="btn-group btn-group-justified" role="group" aria-label="...">
-						<div class="btn-group" role="group">
-							<button type="button" class="btn btn-primary pull-right" id="root-button"> <strong>Root</strong>
-							</button>
-						</div>
-					</div>
-				</div>
-
-			</div>
-		</div>
-		<div class="col-md-3 no-padding factory-form" factory-form ng-show="showFactory">
+		<div class="col-md-2 no-padding factory-form" factory-form ng-show="showFactory">
 			<div class="panel panel-default">
 				<div class="panel-body panel-top-5">
 					<div class="row no-margin">
@@ -49,19 +36,19 @@
 								<p class="error" ng-show="factoryForm.factoryname.$invalid && factoryForm.factoryname.$dirty">Enter a valid factory name.</p>
 							</div>
 							<div class="form-group has-feedback" ng-class="{'has-error':factoryForm.minimum.$invalid && factoryForm.minimum.$dirty,'has-success':factoryForm.minimum.$valid}">
-								<input type="number" class="form-control input-sm" placeholder="Minimum" name="minimum" aria-describedby="minimum" ng-pattern="/^[-]?\d+$/"  ng-model="min" required>
+								<input type="text" class="form-control input-sm" placeholder="Minimum" name="minimum" aria-describedby="minimum" ng-pattern="/^[-]?\d+$/"  ng-model="min" required>
 								<span class="glyphicon glyphicon-ok form-control-feedback" ng-show="factoryForm.minimum.$valid" aria-hidden="true"></span>
 								<span id="minimum" class="sr-only">(success)</span>
 								<p class="error" ng-show="factoryForm.minimum.$invalid && factoryForm.minimum.$dirty">Enter a valid integer.</p>
 							</div>
 							<div class="form-group has-feedback" ng-class="{'has-error':factoryForm.maximum.$invalid && factoryForm.maximum.$dirty,'has-success':factoryForm.maximum.$valid}">
-								<input type="number" class="form-control input-sm" placeholder="Maximum" name="maximum" aria-describedby="maximum" ng-pattern="/^[-]?\d+$/"  ng-model="max" required>
+								<input type="text" class="form-control input-sm" placeholder="Maximum" name="maximum" aria-describedby="maximum" ng-pattern="/^[-]?\d+$/"  ng-model="max" required>
 								<span class="glyphicon glyphicon-ok form-control-feedback" ng-show="factoryForm.maximum.$valid" aria-hidden="true"></span>
 								<span id="maximum" class="sr-only">(success)</span>
 								<p class="error" ng-show="factoryForm.maximum.$invalid && factoryForm.maximum.$dirty">Enter a valid integer.</p>
 							</div>
 							<div class="text-center">
-								<p class="error" ng-show="max <= min && max!=''">Maximum should be greater than minimum.</p>
+								<p class="error" ng-show="!checkMax() && max!=''">Maximum should be greater than minimum.</p>
 								<button class="btn btn-sm btn-success" ng-disabled="factoryForm.$invalid || max <= min" ng-click="createFactory()"> <i class="fa fa-spinner" ng-show="creatingFactory" aria-hidden="true">&emsp;</i> <strong>Create</strong>
 								</button>
 							</div>
@@ -71,38 +58,25 @@
 			</div>
 		</div>
 	</div>
-	<div class="row" ng-repeat="factory in factories track by $index">
-		<div class="col-md-1 col-md-offset-2">
-			<hr class="vr pull-left">
-			<hr class="hr pull-left"></div>
-		<div class="col-md-9 no-padding node-text">
-			<button class="btn btn-small btn-default btn-inverse factory-text" ng-mouseover="openMenu($event, factory._id)" ng-mouseleave="closeMenu()">
-				<p class="pull-left">
-					<strong>{{factory.factoryName}}</strong>
-				</p>
-			</button>
-		</div>
-	</div>
-	<div class="col-md-2 factory-form list-group" ng-show="showFactoryMenu || factoryDeleting || showChildForm" ng-mouseover="showFactoryMenu=true" ng-mouseleave="showFactoryMenu=false" ng-style="menuClass">
-		<a href="#" class="list-group-item" ng-mouseover="openChildForm($event, factory._id)">
+	<div class="col-md-2 factory-form list-group" ng-show="showFactoryMenu || factoryDeleting || showChildForm" ng-mouseover="showFactoryMenu=true" ng-mouseleave="closeMenu()" ng-style="menuClass">
+		<a href="#" class="list-group-item">
 			<ng-form name="childForm">
 				<div class="row no-margin">
-					<i class="fa fa-times-circle-o pull-right close-button" aria-hidden="true" ng-click="closeMenu()"></i>
+					<i class="fa fa-times-circle-o pull-right close-button" aria-hidden="true" ng-click="closeMenu(true)"></i>
 				</div>
 				<div class="row no-margin">
-				<div class="form-group has-feedback" ng-class="{'has-error':childForm.count.$invalid && childForm.count.$dirty,'has-success':childForm.count.$valid}">
-					<input type="number" class="form-control input-sm" name="count" ng-model="childCount" placeholder="Number of childs" required>
-					<span class="glyphicon glyphicon-ok form-control-feedback" ng-show="childForm.count.$valid" aria-hidden="true"></span>
-					<span id="count" class="sr-only">(success)</span>
-					<p class="error" ng-show="childForm.count.$invalid && childForm.count.$dirty">Value should be between 1 and 15.</p>
+					<div class="form-group has-feedback" ng-class="{'has-error':childForm.count.$invalid && childForm.count.$dirty,'has-success':childForm.count.$valid}">
+						<input type="text" class="form-control input-sm" name="count" ng-model="childCount" ng-pattern="/^([1-9]|([1][0-5]))$/" placeholder="Number of childs" required>
+						<span class="glyphicon glyphicon-ok form-control-feedback" ng-show="childForm.count.$valid" aria-hidden="true"></span>
+						<span id="count" class="sr-only">(success)</span>
+						<p class="error" ng-show="childForm.count.$invalid && childForm.count.$dirty">Value should be between 1 and 15.</p>
+					</div>
+					<div class="text-center">
+						<button class="btn btn-xs btn-success" ng-disabled="childForm.$invalid" ng-click="generateChild()">
+							<i class="fa fa-spinner" ng-show="generatingChild" ng-click="generateChild()" aria-hidden="true">&emsp;</i> <strong>Generate</strong>
+						</button>
+					</div>
 				</div>
-				<div class="text-center">
-					<button class="btn btn-xs btn-success" ng-disabled="childForm.$invalid" ng-click="generateChild()">
-						<i class="fa fa-spinner" ng-show="generatingChild" aria-hidden="true">&emsp;</i>
-						<strong>Generate</strong>
-					</button>
-				</div>
-			</div>
 			</ng-form>
 		</a>
 		<a href="#" class="list-group-item" ng-click="deleteFactory()">
@@ -110,6 +84,29 @@
 			Delete
 		</a>
 	</div>
+
+	<div class="tree">
+		<ul>
+			<li>
+				<button type="button" class="btn btn-primary" id="root-button">
+					<strong>Root</strong>
+				</button>
+				<ul>
+					<li ng-repeat="factory in factories track by $index">
+						<button class="btn btn-xs btn-default" ng-mouseover="openMenu($event, factory)" ng-mouseleave="closeMenu()">
+							<strong>{{factory.factoryName}}</strong>
+						</button>
+						<ul>
+							<li ng-repeat="children in factory.childrens track by $index">
+								<p>&nbsp;{{children}}</p>
+							</li>
+						</ul>
+					</li>
+				</ul>
+			</li>
+		</ul>
+	</div>
+
 	<script type="text/javascript" src="config.js"></script>
 	<script type="text/javascript" src="controller.js"></script>
 </body>

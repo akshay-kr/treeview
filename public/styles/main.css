@@ -20,18 +20,8 @@
 	color:red;
 	font-size: 12px;
 }
-.vr {
-    background-color:#000;
-    height:60px !important;
-    width:2.67px;
-}
-.hr{
-	border-top: 2.3px solid #000;
-	width:100%;
-}
-hr{
-	margin-top: 0px;
-	margin-bottom: 0px;
+.padding-right-0{
+	padding-right: 0px;
 }
 .node-text{
 	padding-top: 50px;
@@ -60,4 +50,42 @@ hr{
 }
 .childFormItem{
 	padding-top: 0px;
+}
+
+
+.tree {
+    min-height:20px;
+    padding:19px;
+    margin-bottom:20px;
+}
+.tree li {
+    list-style-type:none;
+    margin:0;
+    padding:30px 20px 0 80px;
+    position:relative
+}
+.tree li::before, .tree li::after {
+    content:'';
+    left:-20px;
+    position:absolute;
+    right:auto
+}
+.tree li::before {
+    border-left:1px solid #999;
+    bottom:50px;
+    height:100%;
+    top:0;
+    width:1px
+}
+.tree li::after {
+    border-top:1px solid #999;
+    height:30px;
+    top:40px;
+    width:100px
+}
+.tree>ul>li::before, .tree>ul>li::after {
+    border:0
+}
+.tree li:last-child::before {
+    height:40px
 }

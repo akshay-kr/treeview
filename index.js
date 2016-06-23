@@ -56,6 +56,29 @@ io.on('connection', function(socket) {
 			socket.broadcast.emit('factory_deleted_fail');
 		});
 	});
+	socket.on('generate_child', function(data) {
+		var id = data.factory._id;
+		var childCount = data.childCount;
+		var max = parseInt(data.factory.max);
+		var min = parseInt(data.factory.min);
+		var childs = generateRandom(childCount, max, min);
+		createMongoClient().then(function() {
+			return appendChild(id, childs);
+		}).then(function() {
+			socket.emit('child_generated_success', {
+				id: id,
+				childrens: childs
+			});
+			socket.broadcast.emit('child_generated_success', {
+				id: id,
+				childrens: childs
+			});
+		}, function(err) {
+			console.log(err);
+			socket.emit('child_generated_fail');
+			socket.broadcast.emit('child_generated_fail');
+		});
+	});
 });
 
 function createMongoClient() {
@@ -121,6 +144,40 @@ function deleteFactory(id) {
 		// Insert some users
 		collection.remove({
 			_id: new mongodb.ObjectID(id)
+		}, function(err) {
+			if (err) {
+				deferred.reject(err);
+			} else {
+				deferred.resolve();
+			}
+		});
+	} else {
+		deferred.reject("Db instance not found.");
+	}
+	return deferred.promise;
+}
+
+function generateRandom(count, max, min) {
+	var childs = [];
+	while (count > 0) {
+		childs.push(Math.floor((Math.random() * (max - min + 1)) + min));
+		count--;
+	}
+	return childs;
+}
+
+function appendChild(id, childs) {
+	var deferred = q.defer();
+	if (dbInstance) {
+		// Get the documents collection
+		var collection = dbInstance.collection(config.collection);
+		// Insert some users
+		collection.updateOne({
+			"_id": new mongodb.ObjectID(id)
+		}, {
+			"$set": {
+				"childrens": childs
+			}
 		}, function(err) {
 			if (err) {
 				deferred.reject(err);

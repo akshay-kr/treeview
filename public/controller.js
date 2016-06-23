@@ -37,6 +37,7 @@ app.controller('mainController', function($scope, $http, ngToast, socket, $rootS
 
 	socket.on('factories_fetch_success', function(data) {
 		$scope.factories = data;
+		console.log(data);
 		$scope.$apply('factories');
 	});
 	socket.on('factories_fetch_fail', function() {
@@ -54,8 +55,19 @@ app.controller('mainController', function($scope, $http, ngToast, socket, $rootS
 			max: $scope.max
 		});
 	};
-	$scope.openMenu = function(passedEventObject, factoryId) {
-		$scope.selectedFactoryId = factoryId;
+
+	$scope.checkMax = function() {
+		var min = parseInt($scope.min);
+		var max = parseInt($scope.max);
+		if (max <= min) {
+			return false;
+		} else {
+			return true;
+		}
+	};
+
+	$scope.openMenu = function(passedEventObject, factory) {
+		$scope.selectedFactory = factory;
 		var element = passedEventObject.currentTarget.getBoundingClientRect();
 		var x = element.left + element.width;
 		var y = element.top;
@@ -66,16 +78,18 @@ app.controller('mainController', function($scope, $http, ngToast, socket, $rootS
 		$scope.showFactoryMenu = true;
 	};
 
-	$scope.closeMenu = function() {
-		$scope.childCount = "";
-		$scope.showFactoryMenu = false;
-		scope.childForm.$setPristine(true);
+	$scope.closeMenu = function(forced) {
+		if (!$scope.childCount || forced) {
+			$scope.childCount = "";
+			$scope.showFactoryMenu = false;
+			$scope.childForm.$setPristine(true);
+		}
 	};
 
 	$scope.deleteFactory = function() {
 		$scope.factoryDeleting = true;
 		socket.emit('delete_factory', {
-			id: $scope.selectedFactoryId
+			id: $scope.selectedFactory._id
 		});
 	};
 
@@ -96,6 +110,36 @@ app.controller('mainController', function($scope, $http, ngToast, socket, $rootS
 		$scope.factoryDeleting = false;
 		$scope.$apply('factoryDeleting');
 	});
+
+	$scope.generateChild = function() {
+		$scope.generatingChild = true;
+		socket.emit('generate_child', {
+			factory: $scope.selectedFactory,
+			childCount: $scope.childCount
+		});
+	};
+
+	socket.on('child_generated_success', function(data) {
+		var match = _.find($scope.factories, function(factory) {
+			return factory._id == data.id;
+		});
+		match.childrens = data.childrens;
+		$scope.childCount = "";
+		$scope.generatingChild = false;
+		$scope.showFactoryMenu = false;
+		$scope.$apply('factories', 'generatingChild', 'showFactoryMenu', 'childCount');
+	});
+
+	socket.on('child_generated_fail', function() {
+		ngToast.create({
+			className: 'warning',
+			content: '<h3>Failed to generate childrens.</h3>',
+		});
+		$scope.childCount = "";
+		$scope.generatingChild = false;
+		$scope.$apply('generatingChild', 'childCount');
+	});
+
 });
 app.directive('factoryForm', ['$compile', function() {
 	return {
