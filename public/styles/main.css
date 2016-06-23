@@ -53,11 +53,6 @@
 }
 
 
-.tree {
-    min-height:20px;
-    padding:19px;
-    margin-bottom:20px;
-}
 .tree li {
     list-style-type:none;
     margin:0;
@@ -73,7 +68,7 @@
 .tree li::before {
     border-left:1px solid #999;
     bottom:50px;
-    height:100%;
+    height:60px;
     top:0;
     width:1px
 }
