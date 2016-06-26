@@ -87,3 +87,14 @@
 .tree li:last-child::before {
     height:40px
 }
+
+.white{
+    color:#ffffff !important;
+}
+.danger{
+    background-color:#d9534f;
+}
+.sort-icon{
+    font-size: 20px;
+    color: #ff6600;
+}

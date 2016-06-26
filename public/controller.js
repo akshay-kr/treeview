@@ -67,13 +67,17 @@ app.controller('mainController', function($scope, $http, ngToast, socket, $rootS
 
 	$scope.openMenu = function(passedEventObject, factory) {
 		$scope.selectedFactory = factory;
+		var scrollY = $window.scrollY;
 		var element = passedEventObject.currentTarget.getBoundingClientRect();
 		var x = element.left + element.width;
-		var y = element.top + $window.scrollY;
-		$scope.menuClass = {
-			"left": x,
-			"top": y
-		};
+		var y = element.top;
+		var bottom = element.bottom;
+		$rootScope.$broadcast('open-menu', {
+			"x": x,
+			"y": y,
+			"bottom": bottom,
+			"scrollY": scrollY
+		});
 		$scope.showFactoryMenu = true;
 	};
 
@@ -192,6 +196,34 @@ app.directive('factoryForm', ['$compile', function() {
 				scope.factoryForm.$setPristine(true);
 			}
 
+		}
+	};
+}]);
+
+app.directive('childMenu', ['$compile', function() {
+	return {
+		restrict: 'AE',
+		link: function(scope, element) {
+			scope.$on("open-menu", function(event, args) {
+				var x = args.x;
+				var y = args.y;
+				var bottom = args.bottom;
+				var scrollY = args.scrollY;
+				var height = element.height();
+				if (height > 0) {
+					if ($(window).scrollTop() == $(document).height() - $(window).height()) {
+						element.css({
+							"left": x,
+							"top": (bottom + scrollY) - height
+						});
+					} else {
+						element.css({
+							"left": x,
+							"top": y + scrollY
+						});
+					}
+				}
+			});
 		}
 	};
 }]);

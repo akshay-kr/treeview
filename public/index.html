@@ -18,7 +18,7 @@
 	<script type="text/javascript" src="lib/socket.io.js"></script>
 
 </head>
-<body ng-controller="mainController">
+<body ng-controller="mainController" ng-cloak>
 	<div class="row">
 		<div class="col-md-2 no-padding factory-form" factory-form ng-show="showFactory">
 			<div class="panel panel-default">
@@ -30,10 +30,10 @@
 					<div class="row no-margin">
 						<ng-form name="factoryForm">
 							<div class="form-group  has-feedback" ng-class="{'has-error':factoryForm.factoryname.$invalid && factoryForm.factoryname.$dirty,'has-success':factoryForm.factoryname.$valid}">
-								<input type="text" class="form-control input-sm" placeholder="Factory name"  name="factoryname" aria-describedby="factoryname" ng-pattern="/^[a-zA-Z]+$/"  ng-model="factoryName" required>
+								<input type="text" class="form-control input-sm" placeholder="Factory name"  name="factoryname" aria-describedby="factoryname" ng-pattern="/^[a-zA-Z0-9 ]+$/"  ng-model="factoryName" required>
 								<span class="glyphicon glyphicon-ok form-control-feedback" ng-show="factoryForm.factoryname.$valid" aria-hidden="true"></span>
 								<span id="factoryname" class="sr-only">(success)</span>
-								<p class="error" ng-show="factoryForm.factoryname.$invalid && factoryForm.factoryname.$dirty">Enter a valid factory name.</p>
+								<p class="error" ng-show="factoryForm.factoryname.$invalid && factoryForm.factoryname.$dirty">Enter a valid factory name. Should be alphanumeric.</p>
 							</div>
 							<div class="form-group has-feedback" ng-class="{'has-error':factoryForm.minimum.$invalid && factoryForm.minimum.$dirty,'has-success':factoryForm.minimum.$valid}">
 								<input type="text" class="form-control input-sm" placeholder="Minimum" name="minimum" aria-describedby="minimum" ng-pattern="/^[-]?\d+$/"  ng-model="min" required>
@@ -58,7 +58,7 @@
 			</div>
 		</div>
 	</div>
-	<div class="col-md-2 factory-form list-group" ng-show="showFactoryMenu || factoryDeleting || showChildForm" ng-mouseover="showFactoryMenu=true" ng-mouseleave="closeMenu()" ng-style="menuClass">
+	<div class="col-md-2 factory-form list-group" ng-show="showFactoryMenu || factoryDeleting || showChildForm" ng-mouseover="showFactoryMenu=true" ng-mouseleave="closeMenu()" ng-style="menuClass" child-menu>
 		<a href="#" class="list-group-item">
 			<ng-form name="childForm">
 				<div class="row no-margin">
@@ -79,9 +79,9 @@
 				</div>
 			</ng-form>
 		</a>
-		<a href="#" class="list-group-item" ng-click="deleteFactory()">
-			<i class="fa fa-spinner" ng-show="factoryDeleting">&emsp;</i>
-			Delete
+		<a href="#" class="list-group-item danger white text-center" ng-click="deleteFactory()">
+			<i class="fa fa-spinner white" ng-show="factoryDeleting">&emsp;</i>
+			<strong>Delete</strong>
 		</a>
 	</div>
 
@@ -93,11 +93,13 @@
 				</button>
 				<ul>
 					<li ng-repeat="factory in factories track by $index">
-						<button class="btn btn-xs btn-default" ng-mouseover="openMenu($event, factory)" ng-mouseleave="closeMenu()">
-							<strong>{{factory.factoryName}}</strong>
-						</button>
+						<button class="btn btn-xs btn-default factory-button" ng-mouseover="openMenu($event, factory)" ng-mouseleave="closeMenu()">
+							<strong class="pull-left">{{factory.factoryName}}</strong>
+						</button>&emsp;
+						<a href="" ng-show="factory.hideChild == true" ng-click="factory.hideChild = false"><i class="fa fa-plus-square sort-icon" aria-hidden="true"></i></a>
+						<a href="" ng-show="!factory.hideChild && factory.childrens" ng-click="factory.hideChild = true"><i class="fa fa-minus-square sort-icon" aria-hidden="true"></i></a>
 						<ul>
-							<li class="child" ng-repeat="children in factory.childrens track by $index">
+							<li class="child" ng-show="!factory.hideChild" ng-repeat="children in factory.childrens track by $index">
 								<p>&nbsp;{{children}}</p>
 							</li>
 						</ul>
