@@ -97,3 +97,6 @@
 .sort-icon{
     font-size: 20px;
 }
+.delete-btn:hover{
+    background-color: #bc2e29 !important;
+}

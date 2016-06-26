@@ -78,7 +78,6 @@ app.controller('mainController', function($scope, $http, ngToast, socket, $rootS
 			"bottom": bottom,
 			"scrollY": scrollY
 		});
-		$scope.showFactoryMenu = true;
 	};
 
 	$scope.closeMenu = function(forced) {
@@ -211,7 +210,7 @@ app.directive('childMenu', ['$compile', function() {
 				var scrollY = args.scrollY;
 				var height = element.height();
 				if (height > 0) {
-					if ($(window).scrollTop() == $(document).height() - $(window).height()) {
+					if (($(window).scrollTop() == $(document).height() - $(window).height()) && ($(window).scrollTop() > 0)) {
 						element.css({
 							"left": x,
 							"top": (bottom + scrollY) - height
@@ -223,6 +222,7 @@ app.directive('childMenu', ['$compile', function() {
 						});
 					}
 				}
+				scope.showFactoryMenu = true;
 			});
 		}
 	};

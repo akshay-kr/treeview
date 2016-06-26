@@ -11,8 +11,6 @@ var MongoClient = mongodb.MongoClient;
 var mongoConnectionUrl = config.mongoConnUrl;
 app.use(cors());
 app.use(express.static(path.join(__dirname, 'public')));
-// viewed at http://localhost:8080
-//app.use(express.static('files'));
 var server = app.listen(config.port);
 app.get('/', function(req, res) {
 	res.sendFile(path.join(__dirname + '/index.html'));
