@@ -58,8 +58,8 @@
 			</div>
 		</div>
 	</div>
-	<div class="col-md-2 factory-form list-group" ng-show="showFactoryMenu || factoryDeleting || showChildForm" ng-mouseover="showFactoryMenu=true" ng-mouseleave="closeMenu()" ng-style="menuClass" child-menu>
-		<a href="#" class="list-group-item">
+	<div class="col-md-2 factory-form list-group" ng-show="showFactoryMenu || factoryDeleting || showChildForm" ng-mouseover="showFactoryMenu=true" ng-mouseleave="closeMenu()" child-menu>
+		<a href="" class="list-group-item">
 			<ng-form name="childForm">
 				<div class="row no-margin">
 					<i class="fa fa-times-circle-o pull-right close-button" aria-hidden="true" ng-click="closeMenu(true)"></i>
@@ -98,9 +98,11 @@
 						</button>&emsp;
 						<a href="" ng-show="factory.hideChild == true" ng-click="factory.hideChild = false"><i class="fa fa-plus-square sort-icon" aria-hidden="true"></i></a>
 						<a href="" ng-show="!factory.hideChild && factory.childrens" ng-click="factory.hideChild = true"><i class="fa fa-minus-square sort-icon" aria-hidden="true"></i></a>
+						&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+						<span class="label label-default">{{factory.min}} : {{factory.max}}</span>
 						<ul>
 							<li class="child" ng-show="!factory.hideChild" ng-repeat="children in factory.childrens track by $index">
-								<p>&nbsp;{{children}}</p>
+								<p>&nbsp;<strong>{{children}}</strong></p>
 							</li>
 						</ul>
 					</li>
