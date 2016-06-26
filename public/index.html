@@ -96,8 +96,8 @@
 						<button class="btn btn-xs btn-default factory-button" ng-mouseover="openMenu($event, factory)" ng-mouseleave="closeMenu()">
 							<strong class="pull-left">{{factory.factoryName}}</strong>
 						</button>&emsp;
-						<a href="" ng-show="factory.hideChild == true" ng-click="factory.hideChild = false"><i class="fa fa-plus-square sort-icon" aria-hidden="true"></i></a>
-						<a href="" ng-show="!factory.hideChild && factory.childrens" ng-click="factory.hideChild = true"><i class="fa fa-minus-square sort-icon" aria-hidden="true"></i></a>
+						<a href="" ng-show="factory.hideChild == true" ng-click="factory.hideChild = false"><i class="fa fa-plus-square sort-icon text-primary" aria-hidden="true"></i></a>
+						<a href="" ng-show="!factory.hideChild && factory.childrens" ng-click="factory.hideChild = true"><i class="fa fa-minus-square sort-icon text-primary" aria-hidden="true"></i></a>
 						&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
 						<span class="label label-default">{{factory.min}} : {{factory.max}}</span>
 						<ul>
