@@ -50,7 +50,7 @@
 							</div>
 							<div class="text-center">
 								<p class="error" ng-show="!checkMax() && max!=''">Maximum should be greater than minimum.</p>
-								<button class="btn btn-sm btn-success" ng-disabled="factoryForm.$invalid || max <= min" ng-click="createFactory()"> <i class="fa fa-spinner" ng-show="creatingFactory" aria-hidden="true">&emsp;</i> <strong>Create</strong>
+								<button class="btn btn-sm btn-success" ng-disabled="factoryForm.$invalid || !checkMax()" ng-click="createFactory()"> <i class="fa fa-spinner" ng-show="creatingFactory" aria-hidden="true">&emsp;</i> <strong>Create</strong>
 								</button>
 							</div>
 						</ng-form>
