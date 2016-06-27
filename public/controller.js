@@ -208,21 +208,27 @@ app.directive('childMenu', ['$compile', function() {
 				var y = args.y;
 				var bottom = args.bottom;
 				var scrollY = args.scrollY;
-				var height = element.height();
+				var height = element.actual('height');
 				if (height > 0) {
+					scope.showFactoryMenu = true;
 					if (($(window).scrollTop() == $(document).height() - $(window).height()) && ($(window).scrollTop() > 0)) {
 						element.css({
 							"left": x,
 							"top": (bottom + scrollY) - height
 						});
+						console.log("x: "+x);
+						console.log("bottom: "+bottom);
+						console.log("scrollY: "+scrollY);
+						console.log("height: "+height);
 					} else {
 						element.css({
 							"left": x,
 							"top": y + scrollY
 						});
 					}
+				}else{
+					scope.showFactoryMenu = false;
 				}
-				scope.showFactoryMenu = true;
 			});
 		}
 	};

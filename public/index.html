@@ -16,6 +16,7 @@
 	<script type="text/javascript" src="bower_components/ngToast/dist/ngToast.js"></script>
 	<script src='bower_components/underscore/underscore-min.js'></script>
 	<script type="text/javascript" src="lib/socket.io.js"></script>
+	<script type="text/javascript" src="lib/jquery.actual.min.js"></script>
 
 </head>
 <body ng-controller="mainController" ng-cloak>
@@ -58,7 +59,7 @@
 			</div>
 		</div>
 	</div>
-	<div class="col-md-2 factory-form list-group" ng-show="showFactoryMenu || factoryDeleting || showChildForm" ng-mouseover="showFactoryMenu=true" ng-mouseleave="closeMenu()" child-menu>
+	<div class="col-md-2 factory-form list-group" ng-show="showFactoryMenu || factoryDeleting" ng-mouseover="showFactoryMenu=true" ng-mouseleave="closeMenu()" child-menu>
 		<a href="" class="list-group-item">
 			<ng-form name="childForm">
 				<div class="row no-margin">
