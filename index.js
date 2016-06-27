@@ -23,11 +23,9 @@ io.on('connection', function(socket) {
 			return getAllFactories();
 		}).then(function(data) {
 			socket.emit('factories_fetch_success', data);
-			socket.broadcast.emit('factories_fetch_success', data);
 		}, function(err) {
 			console.log(err);
 			socket.emit('factories_fetch_fail');
-			socket.broadcast.emit('factories_fetch_fail');
 		});
 	});
 	socket.on('create_factory', function(data) {
