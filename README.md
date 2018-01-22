@@ -6,28 +6,7 @@
 Description
 -------------
 
-TreeView is a webapp which is designed following the problem statement of **"Passport Programming Challenge"** described below hosted by **"PassportParking, Inc"**. TreeView allows user to create tree structure with root element and two sub-levels. It provides realtime updates to all the users connected to the webapp.
-
-> **Problem Statement**
-
-> - Create a web UI with a treeview control that allows multiple users to connect and see the same structure from different locations.
-> - Allow each user to create/delete nodes in the tree.
-> - Live update (Realtime update) all connected users with any changes to the tree.
-> - The treeview will always have a Root and should allow for 2 sublevels – Parent(Factory) and Child(Numbers).
-	1. Each Factory will have the following properties when created:
-		* The name of the factory
-		* The random number pool (the inclusive set of numbers from which to choose, Ex: 30 to 200, including 30 and 200) 
-> - The child nodes for each factory represent the factory output ­> the Numbers.
-> - A way to create a Factory. (Right Click form is shown here, you can have anything. Ex: a create button on the Root) 
-> - A way for the generator to run on a Factory. (Again, Right Click Form is shown here)
-	1. The input should be the count of Numbers to create (only allow 1 to 15 in the count).
-	2. The Numbers don’t have to be unique but have to be randomly generated from the pool.
-	3. When the Numbers are created, have them created as nodes below the factory and also remove any previous nodes from previous generator run.
-> - Utilize a database so that the information is saved (persistent)
-> - Should be able to close your web UI and reconnect with it, in its current state. See that it:
-	1. Has the current tree data. (Changes made by others)
-	2.  [[ Possible location for awesomeness ]]
-> - Your project should be hosted on the web. Use a service such as DigitalOcean, Amazon AWS, or Heroku to host/run your submission.
+TreeView is a webapp which allows user to create tree structure with root element and two sub-levels. It provides realtime updates to all the users connected to the webapp.
 
 Table of contents
 -------------
@@ -38,7 +17,7 @@ Table of contents
 ###Dependencies
 
 1. Nodejs
-2.  Mongodb
+2. Mongodb
 
 
 ##Setup
